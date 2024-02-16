@@ -12,9 +12,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+
+
+    @Override
+    public void remove(Long post_id) {
+
+        postRepository.deleteById(post_id);
+    }
+
 
     @Override
     public Long register(PostDTO postDTO) {

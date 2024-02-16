@@ -5,7 +5,7 @@ import lombok.*;
 
 @Builder
 @Entity
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -20,6 +20,11 @@ public class Post{
 
     @Column(length = 300, nullable = false)
     private String content;
+
+    public void change(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 
 
 }

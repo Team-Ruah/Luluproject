@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.ohgiraffers.luluproject.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -27,6 +29,26 @@ public class PostRepositoryTests {
     public void testDelete(){
 
         Long post_id = 1L;
+        postRepository.deleteById(post_id);
+    }
+
+    @Test
+    public void testUpdate() {
+        Long post_id = 100L;
+
+        Optional<Post> result = postRepository.findById(post_id);
+
+        Post post = result.orElseThrow();
+
+        post.change("update..title 100", "update content 100");
+
+        postRepository.save(post);
+    }
+
+    @Test
+    public void testDelete() {
+        Long post_id = 1L;
+
         postRepository.deleteById(post_id);
     }
 }

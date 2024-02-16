@@ -1,39 +1,31 @@
 package org.ohgiraffers.luluproject.config;
-
-
-import lombok.Builder;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-
-import javax.print.DocPrintJob;
 
 @Configuration
 public class SwaggerConfig {
 
     @Bean
-    public Docket api(){
+    public GroupedOpenApi restApi(){
 
-        return new Docket(DocumentationType.OAS_30)
-                .useDefaultResponseMessages(false)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("org.ohgiraffers.luluproject.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
+
+        return GroupedOpenApi.builder()
+                .pathsToMatch("/api/**")
+                .group("REST API")
+                .build();
 
     }
 
-    private ApiInfo apiInfo(){
+    @Bean
+    public GroupedOpenApi commonApi() {
 
-        return new ApiInfoBuilder()
-                .title("Boot 01 Project Swagger")
+        return GroupedOpenApi.builder()
+                .pathsToMatch("/**/*")
+                .pathsToExclude("/api/**/*")
+                .group("COMMON API")
                 .build();
+
     }
 
 }

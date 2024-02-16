@@ -7,4 +7,10 @@ public interface PostService {
 
     Long register(PostDTO postDTO);
 
+    PostDTO readOne(Long post_id);
+
+    void modify(PostDTO postDTO);
+
+    void remove(Long post_id);
+
 }

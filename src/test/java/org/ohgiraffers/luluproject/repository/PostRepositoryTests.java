@@ -22,6 +22,13 @@ public class PostRepositoryTests {
             Post result = postRepository.save(post);
         });
     }
+
+    @Test
+    public void testDelete(){
+
+        Long post_id = 1L;
+        postRepository.deleteById(post_id);
+    }
 }
 
 

@@ -1,7 +1,8 @@
-
-
 package org.ohgiraffers.luluproject.config;
-import org.springdoc.core.models.GroupedOpenApi;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,25 +10,17 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public GroupedOpenApi restApi(){
-
-
-        return GroupedOpenApi.builder()
-                .pathsToMatch("/*")
-                .group("REST API")
-                .build();
-
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(apiInfo());
     }
 
-    @Bean
-    public GroupedOpenApi commonApi() {
-
-        return GroupedOpenApi.builder()
-                .pathsToMatch("/**/*")
-                .pathsToExclude("/api/**/*")
-                .group("COMMON API")
-                .build();
-
+    private Info apiInfo() {
+        return  new Info()
+                .title("Swagger API Test")
+                .description("Practice Swagger UI")
+                .version("1.0.0");
     }
 
 }

@@ -5,7 +5,7 @@ import lombok.*;
 
 @Builder
 @Entity
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -13,13 +13,18 @@ public class Post{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int post_id;
+    private Long post_id;
 
     @Column(length = 50, nullable = false)
     private String title;
 
     @Column(length = 300, nullable = false)
     private String content;
+
+    public void change(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 
 
 }

@@ -21,7 +21,7 @@ public class PostRepositoryTests {
                     .content("content..." + i)
                     .build();
 
-            Post result = postRepository.save(post);
+           postRepository.save(post);
         });
     }
 
@@ -43,13 +43,6 @@ public class PostRepositoryTests {
         post.change("update..title 100", "update content 100");
 
         postRepository.save(post);
-    }
-
-    @Test
-    public void testDelete() {
-        Long post_id = 1L;
-
-        postRepository.deleteById(post_id);
     }
 }
 

@@ -5,14 +5,14 @@ import org.ohgiraffers.luluproject.dto.PageRequestDTO;
 import org.ohgiraffers.luluproject.dto.PageResponseDTO;
 import org.ohgiraffers.luluproject.dto.PostDTO;
 import org.ohgiraffers.luluproject.service.PostService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-@Controller
+@RestController
 @RequestMapping("/lulu")
 @RequiredArgsConstructor
 public class PostController {
@@ -20,6 +20,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/list")
+
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
         PageResponseDTO<PostDTO> responseDTO = postService.list(pageRequestDTO);
@@ -32,12 +33,7 @@ public class PostController {
 
     }
     @PostMapping("/register")
-    public String registerPost(PostDTO postDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/lulu/register";
-        }
+    public String registerPost(PostDTO postDTO, RedirectAttributes redirectAttributes){
 
         Long post_id = postService.register(postDTO);
 

@@ -35,6 +35,7 @@ public class PostServiceImpl implements PostService {
         //                    .content(postDTO.getContent())
         //                    .build();
         // Post 클래스에 setter 사용 안할시
+        //
 
         Long post_id = postRepository.save(post).getPost_id();
 

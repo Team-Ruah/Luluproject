@@ -20,6 +20,7 @@ public interface PostService {
     void remove(Long post_id);
 
 //    PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
+//    페이징 개발이 필요합니다........
 
     List<PostDTO> getAllList();
 

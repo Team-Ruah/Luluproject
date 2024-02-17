@@ -1,17 +1,26 @@
 package org.ohgiraffers.luluproject.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.ohgiraffers.luluproject.domain.Post;
 import org.ohgiraffers.luluproject.dto.PageRequestDTO;
 import org.ohgiraffers.luluproject.dto.PageResponseDTO;
 import org.ohgiraffers.luluproject.dto.PostDTO;
+import org.ohgiraffers.luluproject.repository.PostRepository;
 import org.ohgiraffers.luluproject.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/lulu")
 @RequiredArgsConstructor
@@ -19,14 +28,11 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/list")
-
-    public void list(PageRequestDTO pageRequestDTO, Model model){
-
-        PageResponseDTO<PostDTO> responseDTO = postService.list(pageRequestDTO);
-
-        model.addAttribute("responseDTO", responseDTO);
-    }
+@GetMapping("/list")
+public ResponseEntity<List<PostDTO>> getAllList() {
+    List<PostDTO> dtos = postService.getAllList();
+    return new ResponseEntity<>(dtos, HttpStatus.OK);
+}
 
     @GetMapping("/register")
     public void registerGET() {
@@ -48,6 +54,12 @@ public class PostController {
         PostDTO postDTO = postService.readOne(post_id);
 
         model.addAttribute("post_id", postDTO);
+    }
+
+    @GetMapping("/readone")
+    public ResponseEntity<PostDTO> getOnePost(Long post_id) {
+        PostDTO postDTO = postService.readOne(post_id);
+        return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }
 
     @PostMapping("/modify")

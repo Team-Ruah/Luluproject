@@ -22,7 +22,7 @@ public class PageRequestDTO {
     private int size = 5;
 
     public Pageable getPageable(String... props) {
-        return PageRequest.of(this.page - 1, this.size, Sort.by(props).descending());
+        return PageRequest.of(this.page - 1, this.size, Sort.by(Sort.Direction.DESC, props));
     }
 
     private String link;

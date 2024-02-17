@@ -50,6 +50,7 @@ public class PostServiceImpl implements PostService {
         Post post = result.orElseThrow();
 
         PostDTO postDTO = new PostDTO();
+        postDTO.setPost_id(post.getPost_id());
         postDTO.setTitle(post.getTitle());
         postDTO.setContent(post.getContent());
 
@@ -74,19 +75,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("getPost_id");
-
-        Page<Post> result = postRepository.findAll(pageable);
-
-        List<PostDTO> dtoList = result.getContent().stream()
-                .map(post -> new PostDTO(post.getPost_id(), post.getTitle(), post.getContent())) //
+    public List<PostDTO> getAllList() {
+        List<Post> ListAll = postRepository.findAll();
+        List<PostDTO> dtos = ListAll.stream()
+                .map(Post -> convertToDto(Post))
                 .collect(Collectors.toList());
 
-        return PageResponseDTO.<PostDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int)result.getTotalElements())
-                .build();
+        return dtos;
+    }
+    private PostDTO convertToDto(Post post) {
+        PostDTO dto = new PostDTO();
+        dto.setPost_id(post.getPost_id());
+        dto.setTitle(post.getTitle());
+        dto.setContent(post.getContent());
+        return dto;
     }
 }

@@ -8,7 +8,9 @@ import org.ohgiraffers.luluproject.dto.PageResponseDTO;
 import org.ohgiraffers.luluproject.dto.PostDTO;
 import org.ohgiraffers.luluproject.repository.PostRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,20 +39,20 @@ public class PostServiceImpl implements PostService {
         // Post 클래스에 setter 사용 안할시
         //
 
-        Long post_id = postRepository.save(post).getPost_id();
+        Long postid = postRepository.save(post).getPostid();
 
-        return post_id;
+        return postid;
     }
 
     @Override
-    public PostDTO readOne(Long post_id) {
+    public PostDTO readOne(Long postid) {
 
-        Optional<Post> result = postRepository.findById(post_id);
+        Optional<Post> result = postRepository.findById(postid);
 
         Post post = result.orElseThrow();
 
         PostDTO postDTO = new PostDTO();
-        postDTO.setPost_id(post.getPost_id());
+        postDTO.setPostid(post.getPostid());
         postDTO.setTitle(post.getTitle());
         postDTO.setContent(post.getContent());
 
@@ -59,7 +61,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void modify(PostDTO postDTO) {
-        Optional<Post> result = postRepository.findById(postDTO.getPost_id());
+        Optional<Post> result = postRepository.findById(postDTO.getPostid());
 
         Post post = result.orElseThrow();
 
@@ -69,25 +71,51 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void remove(Long post_id) {
+    public void remove(Long postid) {
 
-        postRepository.deleteById(post_id);
+        postRepository.deleteById(postid);
     }
 
     @Override
     public List<PostDTO> getAllList() {
         List<Post> ListAll = postRepository.findAll();
         List<PostDTO> dtos = ListAll.stream()
-                .map(Post -> convertToDto(Post))
+                .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
 
         return dtos;
     }
     private PostDTO convertToDto(Post post) {
         PostDTO dto = new PostDTO();
-        dto.setPost_id(post.getPost_id());
+        dto.setPostid(post.getPostid());
         dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
         return dto;
     }
+
+    @Override
+    public PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO){
+
+        Pageable pageable = pageRequestDTO.getPageable("postid");
+
+        Page<Post> result = postRepository.findAll(pageable);
+
+        List<PostDTO> dtoList = result.getContent().stream()
+                .map(post -> {
+                    PostDTO postDTO = new PostDTO();
+                    postDTO.setPostid(post.getPostid());
+                    postDTO.setTitle(post.getTitle());
+                    postDTO.setContent(post.getContent());
+                    return postDTO;
+                })
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<PostDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
+    }
+
+
 }

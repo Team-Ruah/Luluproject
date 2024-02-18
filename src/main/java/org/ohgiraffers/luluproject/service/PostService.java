@@ -13,13 +13,13 @@ public interface PostService {
 
     Long register(PostDTO postDTO);
 
-    PostDTO readOne(Long post_id);
+    PostDTO readOne(Long postid);
 
     void modify(PostDTO postDTO);
 
-    void remove(Long post_id);
+    void remove(Long postid);
 
-//    PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
+   PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
 
     List<PostDTO> getAllList();
 

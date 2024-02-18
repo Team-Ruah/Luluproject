@@ -21,6 +21,7 @@ public interface PostService {
 
    PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
 
+
     List<PostDTO> getAllList();
 
 }

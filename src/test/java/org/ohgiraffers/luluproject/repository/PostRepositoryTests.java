@@ -28,15 +28,15 @@ public class PostRepositoryTests {
     @Test
     public void testDelete(){
 
-        Long post_id = 1L;
-        postRepository.deleteById(post_id);
+        Long postid = 1L;
+        postRepository.deleteById(postid);
     }
 
     @Test
     public void testUpdate() {
-        Long post_id = 100L;
+        Long postid = 100L;
 
-        Optional<Post> result = postRepository.findById(post_id);
+        Optional<Post> result = postRepository.findById(postid);
 
         Post post = result.orElseThrow();
 

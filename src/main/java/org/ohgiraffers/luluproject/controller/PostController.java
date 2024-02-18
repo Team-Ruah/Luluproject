@@ -25,6 +25,11 @@ public ResponseEntity<List<PostDTO>> getAllList() {
     List<PostDTO> dtos = postService.getAllList();
     return new ResponseEntity<>(dtos, HttpStatus.OK);
 }
+    @GetMapping("/paging")
+    public ResponseEntity<PageResponseDTO<PostDTO>> getPaging(PageRequestDTO pageRequestDTO){
+        PageResponseDTO<PostDTO> result = postService.list(pageRequestDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @GetMapping("/register")
     public void registerGET() {
@@ -33,24 +38,24 @@ public ResponseEntity<List<PostDTO>> getAllList() {
     @PostMapping("/register")
     public String registerPost(PostDTO postDTO, RedirectAttributes redirectAttributes){
 
-        Long post_id = postService.register(postDTO);
+        Long postid = postService.register(postDTO);
 
-        redirectAttributes.addFlashAttribute("result", post_id);
+        redirectAttributes.addFlashAttribute("result", postid);
 
         return  "redirect:/lulu/list";
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long post_id, PageRequestDTO pageRequestDTO, Model model){
+    public void read(Long postid, PageRequestDTO pageRequestDTO, Model model){
 
-        PostDTO postDTO = postService.readOne(post_id);
+        PostDTO postDTO = postService.readOne(postid);
 
-        model.addAttribute("post_id", postDTO);
+        model.addAttribute("postid", postDTO);
     }
 
     @GetMapping("/readone")
-    public ResponseEntity<PostDTO> getOnePost(Long post_id) {
-        PostDTO postDTO = postService.readOne(post_id);
+    public ResponseEntity<PostDTO> getOnePost(Long postid) {
+        PostDTO postDTO = postService.readOne(postid);
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }
 
@@ -64,7 +69,7 @@ public ResponseEntity<List<PostDTO>> getAllList() {
 
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            redirectAttributes.addAttribute("post_id", postDTO.getPost_id());
+            redirectAttributes.addAttribute("postid", postDTO.getPostid());
 
             return "redirect:/lulu/modify?"+link;
         }
@@ -72,15 +77,15 @@ public ResponseEntity<List<PostDTO>> getAllList() {
 
         redirectAttributes.addFlashAttribute("result", "modified");
 
-        redirectAttributes.addAttribute("post_id", postDTO.getPost_id());
+        redirectAttributes.addAttribute("postid", postDTO.getPostid());
 
         return "redirect:/lulu/read";
     }
 
     @PostMapping("/remove")
-    public String remove(Long post_id, RedirectAttributes redirectAttributes){
+    public String remove(Long postid, RedirectAttributes redirectAttributes){
 
-        postService.remove(post_id);
+        postService.remove(postid);
 
         redirectAttributes.addFlashAttribute("result", "removed");
 

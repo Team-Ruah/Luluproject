@@ -3,6 +3,7 @@ package org.ohgiraffers.luluproject.service;
 import org.junit.jupiter.api.Test;
 import org.ohgiraffers.luluproject.domain.Post;
 import org.ohgiraffers.luluproject.dto.PageRequestDTO;
+import org.ohgiraffers.luluproject.dto.PageResponseDTO;
 import org.ohgiraffers.luluproject.dto.PostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,14 +22,14 @@ public class PostServiceTests {
                 .content("Sample Content...")
                 .build();
 
-        Long post_id = postService.register(postdto);
+        Long postid = postService.register(postdto);
     }
 
     @Test
     public void testModify() {
 
         PostDTO postDTO = PostDTO.builder()
-                .post_id(101L)
+                .postid(101L)
                 .title("Updated....102")
                 .content("Updated content 101...")
                 .build();

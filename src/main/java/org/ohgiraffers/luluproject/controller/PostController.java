@@ -2,6 +2,7 @@ package org.ohgiraffers.luluproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.ohgiraffers.luluproject.dto.PageRequestDTO;
+import org.ohgiraffers.luluproject.dto.PageResponseDTO;
 import org.ohgiraffers.luluproject.dto.PostDTO;
 import org.ohgiraffers.luluproject.service.PostService;
 import org.springframework.http.HttpStatus;

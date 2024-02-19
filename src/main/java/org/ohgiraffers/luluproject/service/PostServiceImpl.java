@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService {
         // Post 클래스에 setter 사용 안할시
         //
 
-        Long postid = postRepository.save(post).getPostid();
+        Long postid = postRepository.save(post).getPostId();
 
         return postid;
     }
@@ -50,7 +50,7 @@ public class PostServiceImpl implements PostService {
         Post post = result.orElseThrow();
 
         PostDTO postDTO = new PostDTO();
-        postDTO.setPostid(post.getPostid());
+        postDTO.setPostId(post.getPostId());
         postDTO.setTitle(post.getTitle());
         postDTO.setContent(post.getContent());
 
@@ -59,7 +59,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void modify(PostDTO postDTO) {
-        Optional<Post> result = postRepository.findById(postDTO.getPostid());
+        Optional<Post> result = postRepository.findById(postDTO.getPostId());
 
         Post post = result.orElseThrow();
 
@@ -69,9 +69,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void remove(Long postid) {
+    public void remove(Long postId) {
 
-        postRepository.deleteById(postid);
+        postRepository.deleteById(postId);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
     }
     private PostDTO convertToDto(Post post) {
         PostDTO dto = new PostDTO();
-        dto.setPostid(post.getPostid());
+        dto.setPostId(post.getPostId());
         dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
         return dto;
@@ -94,14 +94,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO){
 
-        Pageable pageable = pageRequestDTO.getPageable("postid");
+        Pageable pageable = pageRequestDTO.getPageable("postId");
 
         Page<Post> result = postRepository.findAll(pageable);
 
         List<PostDTO> dtoList = result.getContent().stream()
                 .map(post -> {
                     PostDTO postDTO = new PostDTO();
-                    postDTO.setPostid(post.getPostid());
+                    postDTO.setPostId(post.getPostId());
                     postDTO.setTitle(post.getTitle());
                     postDTO.setContent(post.getContent());
                     return postDTO;

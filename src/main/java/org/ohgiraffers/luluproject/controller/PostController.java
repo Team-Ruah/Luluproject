@@ -39,24 +39,24 @@ public ResponseEntity<List<PostDTO>> getAllList() {
     @PostMapping("/register")
     public String registerPost(PostDTO postDTO, RedirectAttributes redirectAttributes){
 
-        Long postid = postService.register(postDTO);
+        Long postId = postService.register(postDTO);
 
-        redirectAttributes.addFlashAttribute("result", postid);
+        redirectAttributes.addFlashAttribute("result", postId);
 
         return  "redirect:/lulu/list";
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long postid, PageRequestDTO pageRequestDTO, Model model){
+    public void read(Long postId, PageRequestDTO pageRequestDTO, Model model){
 
-        PostDTO postDTO = postService.readOne(postid);
+        PostDTO postDTO = postService.readOne(postId);
 
-        model.addAttribute("postid", postDTO);
+        model.addAttribute("postId", postDTO);
     }
 
     @GetMapping("/readone")
-    public ResponseEntity<PostDTO> getOnePost(Long postid) {
-        PostDTO postDTO = postService.readOne(postid);
+    public ResponseEntity<PostDTO> getOnePost(Long postId) {
+        PostDTO postDTO = postService.readOne(postId);
         return new ResponseEntity<>(postDTO, HttpStatus.OK);
     }
 
@@ -70,7 +70,7 @@ public ResponseEntity<List<PostDTO>> getAllList() {
 
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            redirectAttributes.addAttribute("postid", postDTO.getPostid());
+            redirectAttributes.addAttribute("postId", postDTO.getPostId());
 
             return "redirect:/lulu/modify?"+link;
         }
@@ -78,15 +78,15 @@ public ResponseEntity<List<PostDTO>> getAllList() {
 
         redirectAttributes.addFlashAttribute("result", "modified");
 
-        redirectAttributes.addAttribute("postid", postDTO.getPostid());
+        redirectAttributes.addAttribute("postId", postDTO.getPostId());
 
         return "redirect:/lulu/read";
     }
 
     @PostMapping("/remove")
-    public String remove(Long postid, RedirectAttributes redirectAttributes){
+    public String remove(Long postId, RedirectAttributes redirectAttributes){
 
-        postService.remove(postid);
+        postService.remove(postId);
 
         redirectAttributes.addFlashAttribute("result", "removed");
 

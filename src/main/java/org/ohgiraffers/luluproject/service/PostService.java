@@ -10,11 +10,11 @@ public interface PostService {
 
     Long register(PostDTO postDTO);
 
-    PostDTO readOne(Long postid);
+    PostDTO readOne(Long postId);
 
     void modify(PostDTO postDTO);
 
-    void remove(Long postid);
+    void remove(Long postId);
 
     PageResponseDTO<PostDTO> list(PageRequestDTO pageRequestDTO);
 

@@ -22,14 +22,14 @@ public class PostServiceTests {
                 .content("Sample Content...")
                 .build();
 
-        Long postid = postService.register(postdto);
+        Long postId = postService.register(postdto);
     }
 
     @Test
     public void testModify() {
 
         PostDTO postDTO = PostDTO.builder()
-                .postid(101L)
+                .postId(101L)
                 .title("Updated....102")
                 .content("Updated content 101...")
                 .build();
